@@ -1,0 +1,4 @@
+framework module FCSDKiOS {
+  header "FCSDKiOS-Swift.h"
+  requires objc
+}

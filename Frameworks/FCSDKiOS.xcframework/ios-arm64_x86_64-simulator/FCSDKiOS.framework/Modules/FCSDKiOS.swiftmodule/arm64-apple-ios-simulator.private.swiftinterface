@@ -1,0 +1,622 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FCSDKiOS
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import AVKit
+import Accelerate
+import CoreImage.CIFilterBuiltins
+import CommonCrypto
+import CoreGraphics
+import CoreImage
+import CryptoKit
+import Foundation
+import MetalKit
+import Swift
+import UIKit
+import Vision
+import _Concurrency
+import _StringProcessing
+@_hasMissingDesignatedInitializers final public class ACBDevice {
+  @objc final public func recommendedCaptureSettings() -> [FCSDKiOS.ACBVideoCaptureSetting]
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers @available(iOS 13, *)
+final public class ACBClientAED : ObjectiveC.NSObject, @unchecked Swift.Sendable {
+  @objc deinit
+  @objc final public func createTopic(withName topicName: Swift.String, delegate: FCSDKiOS.ACBTopicDelegate?) -> FCSDKiOS.ACBTopic?
+  @objc final public func createTopic(withName topicName: Swift.String, expiryTime: Swift.Int, delegate: FCSDKiOS.ACBTopicDelegate?) -> FCSDKiOS.ACBTopic?
+}
+extension CoreFoundation.CGSize : Swift.Comparable {
+  public static func < (lhs: CoreFoundation.CGSize, rhs: CoreFoundation.CGSize) -> Swift.Bool
+}
+@objc final public class AedData : ObjectiveC.NSObject, Swift.Codable, @unchecked Swift.Sendable {
+  @objc final public var type: Swift.String?
+  @objc final public var name: Swift.String?
+  @objc final public var topicData: [FCSDKiOS.TopicData]?
+  @objc final public var message: Swift.String?
+  final public var timeout: Swift.Int?
+  @objc final public var _timeout: Foundation.NSNumber? {
+    @objc get
+    @objc set(objcTimeout)
+  }
+  public enum CodingKeys : Swift.String, Swift.CodingKey, Swift.Sendable {
+    case type
+    case name
+    case topicData
+    case message
+    case timeout
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(type: Swift.String? = nil, name: Swift.String? = nil, topicData: [FCSDKiOS.TopicData]? = nil, message: Swift.String? = nil, timeout: Swift.Int? = nil)
+  @objc convenience public init(type: Swift.String? = nil, name: Swift.String? = nil, topicData: [FCSDKiOS.TopicData]? = nil, message: Swift.String? = nil, _timeout: Foundation.NSNumber? = nil)
+  required public init(from decoder: Swift.Decoder) throws
+  final public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+}
+@objc public enum ACBMediaDirection : Swift.Int, Swift.Comparable, Swift.Sendable {
+  case none
+  case sendOnly
+  case receiveOnly
+  case sendAndReceive
+}
+extension FCSDKiOS.ACBMediaDirection : Swift.CaseIterable {
+  public typealias AllCases = [FCSDKiOS.ACBMediaDirection]
+  public static var allCases: [FCSDKiOS.ACBMediaDirection] {
+    get
+  }
+}
+extension FCSDKiOS.ACBMediaDirection : Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  public var rawValue: FCSDKiOS.ACBMediaDirection.RawValue {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public static func < (lhs: FCSDKiOS.ACBMediaDirection, rhs: FCSDKiOS.ACBMediaDirection) -> Swift.Bool
+}
+@objc @_hasMissingDesignatedInitializers final public class ACBVideoCaptureSetting : ObjectiveC.NSObject, @unchecked Swift.Sendable {
+  @objc final public var resolution: FCSDKiOS.ACBVideoCapture {
+    get
+  }
+  @objc final public var frameRate: Swift.Int {
+    get
+  }
+  @objc final public class func sizeForVideoCaptureResolution(resolution: FCSDKiOS.ACBVideoCapture.RawValue) -> CoreFoundation.CGSize
+  @objc deinit
+}
+@available(iOS 13, *)
+@objc public protocol ACBTopicDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didConnectWithData data: FCSDKiOS.AedData)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didDeleteWithMessage message: Swift.String)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didSubmitWithKey key: Swift.String, value: Swift.String, version: Swift.Int)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didDeleteDataSuccessfullyWithKey key: Swift.String, version: Swift.Int)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didSendMessageSuccessfullyWithMessage message: Swift.String)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didNotConnectWithMessage message: Swift.String)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didNotDeleteWithMessage message: Swift.String)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didNotSubmitWithKey key: Swift.String, value: Swift.String, message: Swift.String)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didNotDeleteDataWithKey key: Swift.String, message: Swift.String)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didNotSendMessage originalMessage: Swift.String, message: Swift.String)
+  @objc func topicDidDelete(_ topic: FCSDKiOS.ACBTopic)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didUpdateWithKey key: Swift.String, value: Swift.String, version: Swift.Int, deleted: Swift.Bool)
+  @objc func topic(_ topic: FCSDKiOS.ACBTopic, didReceiveMessage message: Swift.String)
+}
+@available(iOS 13, *)
+@objc public protocol ACBUCDelegate : ObjectiveC.NSObjectProtocol {
+  @objc optional func ucDidStartSession(_ uc: FCSDKiOS.ACBUC)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didStartSession(_ uc: FCSDKiOS.ACBUC) async
+  #endif
+  @objc optional func ucDidFail(toStartSession uc: FCSDKiOS.ACBUC)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didFail(toStartSession uc: FCSDKiOS.ACBUC) async
+  #endif
+  @objc optional func ucDidReceiveSystemFailure(_ uc: FCSDKiOS.ACBUC)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveSystemFailure(_ uc: FCSDKiOS.ACBUC) async
+  #endif
+  @objc optional func ucDidLoseConnection(_ uc: FCSDKiOS.ACBUC)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didLoseConnection(_ uc: FCSDKiOS.ACBUC) async
+  #endif
+  @objc optional func uc(_ uc: FCSDKiOS.ACBUC, willRetryConnectionNumber attemptNumber: Swift.Int, in delay: Foundation.TimeInterval)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func uc(_ uc: FCSDKiOS.ACBUC, willRetryConnection attemptNumber: Swift.Int, in delay: Foundation.TimeInterval) async
+  #endif
+  @objc optional func ucDidReestablishConnection(_ uc: FCSDKiOS.ACBUC)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReestablishConnection(_ uc: FCSDKiOS.ACBUC) async
+  #endif
+}
+public enum ACBClientCallErrorCode : Swift.String, Swift.Error, Swift.Sendable {
+  case dialFailure
+  case dialFailureCallInProgress
+  case callFailure
+  case wrongStateWhenAnswerReceived
+  case sessionDescriptionCreationError
+}
+extension FCSDKiOS.ACBClientCallErrorCode : Swift.CaseIterable {
+  public typealias AllCases = [FCSDKiOS.ACBClientCallErrorCode]
+  public static var allCases: [FCSDKiOS.ACBClientCallErrorCode] {
+    get
+  }
+}
+extension FCSDKiOS.ACBClientCallErrorCode : Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  public var rawValue: FCSDKiOS.ACBClientCallErrorCode.RawValue {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public static func < (lhs: FCSDKiOS.ACBClientCallErrorCode, rhs: FCSDKiOS.ACBClientCallErrorCode) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers final public class Constants : ObjectiveC.NSObject {
+  @objc public static let SDK_VERSION_NUMBER: Swift.String
+  @objc public static var WEBSOCKET_CONNECTION_TIMEOUT: Swift.Float
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc public enum LoggingLevel : Swift.Int, Swift.Sendable {
+  case trace, debug, info, notice, warning, error, critical
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+extension FCSDKiOS.ACBClientPhone {
+  @available(*, deprecated, message: "use createCall() async instead")
+  @objc final public func createCall(toAddress remoteAddress: Swift.String, withAudio audioDirection: FCSDKiOS.ACBMediaDirection, video videoDirection: FCSDKiOS.ACBMediaDirection, delegate: FCSDKiOS.ACBClientCallDelegate?) -> FCSDKiOS.ACBClientCall?
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func createCall(toAddress remoteAddress: Swift.String, withAudio audioDirection: FCSDKiOS.ACBMediaDirection, video videoDirection: FCSDKiOS.ACBMediaDirection, delegate: FCSDKiOS.ACBClientCallDelegate?) async -> FCSDKiOS.ACBClientCall?
+  #endif
+}
+@objc @_hasMissingDesignatedInitializers @available(iOS 13, *)
+final public class ACBClientPhone : ObjectiveC.NSObject {
+  @objc final public var mirrorFrontFacingCameraPreview: Swift.Bool
+  @objc final public var currentCalls: [FCSDKiOS.ACBClientCall] {
+    get
+  }
+  @objc weak final public var delegate: FCSDKiOS.ACBClientPhoneDelegate? {
+    @objc get
+    @objc set
+  }
+  @objc final public var audioDeviceManager: FCSDKiOS.ACBAudioDeviceManager {
+    get
+  }
+  @objc final public var preferredCaptureResolution: FCSDKiOS.ACBVideoCapture {
+    @objc get
+    @objc set
+  }
+  @objc final public var preferredCaptureFrameRate: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor @objc final public var previewView: UIKit.UIView? {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor @objc final public var remoteView: UIKit.UIView? {
+    @objc get
+    @objc set
+  }
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public class func requestMicrophoneAndCameraPermission(_ audio: Swift.Bool, video: Swift.Bool) async
+  #endif
+  @objc deinit
+  @objc final public func setCamera(_ position: AVFoundation.AVCaptureDevice.Position)
+  @objc final public func recommendedCaptureSettings() -> [FCSDKiOS.ACBVideoCaptureSetting]?
+}
+@objc public enum ACBVideoCapture : Swift.Int, Swift.Comparable, Swift.Sendable {
+  case resolutionAuto
+  case resolution352x288
+  case resolution640x480
+  case resolution1280x720
+}
+extension FCSDKiOS.ACBVideoCapture : Swift.CaseIterable {
+  public typealias AllCases = [FCSDKiOS.ACBVideoCapture]
+  public static var allCases: [FCSDKiOS.ACBVideoCapture] {
+    get
+  }
+}
+extension FCSDKiOS.ACBVideoCapture : Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  public var rawValue: FCSDKiOS.ACBVideoCapture.RawValue {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public static func < (lhs: FCSDKiOS.ACBVideoCapture, rhs: FCSDKiOS.ACBVideoCapture) -> Swift.Bool
+}
+@objc public enum ACBAudioDevice : Swift.Int, Swift.Comparable, Swift.Sendable {
+  case speakerphone
+  case wiredHeadset
+  case earpiece
+  case bluetooth
+  case none
+}
+extension FCSDKiOS.ACBAudioDevice : Swift.CaseIterable {
+  public typealias AllCases = [FCSDKiOS.ACBAudioDevice]
+  public static var allCases: [FCSDKiOS.ACBAudioDevice] {
+    get
+  }
+}
+extension FCSDKiOS.ACBAudioDevice : Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  public var rawValue: FCSDKiOS.ACBAudioDevice.RawValue {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public static func < (lhs: FCSDKiOS.ACBAudioDevice, rhs: FCSDKiOS.ACBAudioDevice) -> Swift.Bool
+}
+@objc public enum ACBClientCallProvisionalResponse : Swift.Int, Swift.Sendable {
+  case ignored
+  case ringing
+  case beingForwarded
+  case queued
+  case sessionProgress
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc final public class ACBUCOptions : ObjectiveC.NSObject, Swift.OptionSet {
+  @objc public static func none() -> FCSDKiOS.ACBUCOptions
+  @objc public static func useSoftwareEchoCancellation() -> FCSDKiOS.ACBUCOptions
+  @objc public static func noVoiceProcessing() -> FCSDKiOS.ACBUCOptions
+  final public var rawValue: Swift.Int
+  public typealias RawValue = Swift.Int
+  @objc override convenience dynamic public init()
+  public init(rawValue: Swift.Int)
+  @objc convenience public init(options: [FCSDKiOS.ACBUCOptions])
+  @objc override final public var hash: Swift.Int {
+    @objc get
+  }
+  @objc override final public func isEqual(_ object: Any?) -> Swift.Bool
+  final public func formUnion(_ other: FCSDKiOS.ACBUCOptions)
+  final public func formIntersection(_ other: FCSDKiOS.ACBUCOptions)
+  final public func formSymmetricDifference(_ other: FCSDKiOS.ACBUCOptions)
+  public typealias ArrayLiteralElement = FCSDKiOS.ACBUCOptions
+  public typealias Element = FCSDKiOS.ACBUCOptions
+  @objc deinit
+}
+extension UIKit.UIView {
+  @_Concurrency.MainActor public func anchors(top: UIKit.NSLayoutYAxisAnchor? = nil, leading: UIKit.NSLayoutXAxisAnchor? = nil, bottom: UIKit.NSLayoutYAxisAnchor? = nil, trailing: UIKit.NSLayoutXAxisAnchor? = nil, centerX: UIKit.NSLayoutXAxisAnchor? = nil, centerY: UIKit.NSLayoutYAxisAnchor? = nil, topPadding: CoreFoundation.CGFloat = 0, leadPadding: CoreFoundation.CGFloat = 0, bottomPadding: CoreFoundation.CGFloat = 0, trailPadding: CoreFoundation.CGFloat = 0, width: CoreFoundation.CGFloat = 0, height: CoreFoundation.CGFloat = 0)
+  @_Concurrency.MainActor public func fillParentView(parentView: UIKit.UIView, childView: UIKit.UIView)
+  @_Concurrency.MainActor public func roundCorners(corners: UIKit.UIRectCorner, width: CoreFoundation.CGFloat, height: CoreFoundation.CGFloat)
+}
+@available(iOS 13, *)
+extension Foundation.Notification : @unchecked Swift.Sendable {
+}
+@objc @_hasMissingDesignatedInitializers @available(iOS 13, *)
+final public class ACBClientCall : ObjectiveC.NSObject {
+  @objc final public var hasRemoteAudio: Swift.Bool {
+    get
+  }
+  @objc final public var callId: Swift.String
+  @_Concurrency.MainActor @objc final public var remoteView: UIKit.UIView? {
+    @objc get
+    @objc set
+  }
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @_Concurrency.MainActor @objc final public func remoteBufferView() async -> UIKit.UIView?
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @_Concurrency.MainActor @objc final public func setPipController(_ controller: AVKit.AVPictureInPictureController) async
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @objc final public func captureSession() async -> AVFoundation.AVCaptureSession?
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @_Concurrency.MainActor @objc final public func localBufferView() async -> UIKit.UIView?
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @objc final public func removeBufferView() async
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @objc final public func removeLocalBufferView() async
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @objc final public func feedBackgroundImage(_ image: UIKit.UIImage? = nil, mode: FCSDKiOS.VirtualBackgroundMode = .image) async
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @available(iOS 15, *)
+  @objc final public func removeBackgroundImage() async
+  #endif
+  @objc final public var hasRemoteVideo: Swift.Bool {
+    get
+  }
+  @objc final public var remoteAddress: Swift.String {
+    get
+  }
+  @_Concurrency.MainActor @objc final public var remoteDisplayName: Swift.String {
+    get
+  }
+  @objc weak final public var delegate: FCSDKiOS.ACBClientCallDelegate? {
+    @objc get
+    @objc set
+  }
+  @objc final public var status: FCSDKiOS.ACBClientCallStatus {
+    get
+  }
+  @objc deinit
+  @objc final public func enableLocalAudio(_ isAudioEnabled: Swift.Bool)
+  @objc final public func enableLocalVideo(_ isVideoEnabled: Swift.Bool)
+  @objc final public func playDTMFCode(_ code: Swift.String, localPlayback: Swift.Bool = false)
+  @objc final public func end()
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func end() async
+  #endif
+}
+extension UIKit.UIImage {
+  @objc dynamic public var title: Swift.String {
+    @objc get
+    @objc set
+  }
+}
+@objc public enum VirtualBackgroundMode : Swift.Int, Swift.Sendable {
+  case blur, image
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc final public class TopicData : ObjectiveC.NSObject, Swift.Codable, @unchecked Swift.Sendable {
+  @objc final public var key: Swift.String?
+  @objc final public var value: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey, Swift.Sendable {
+    case key
+    case value
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  @objc public init(key: Swift.String, value: Swift.String)
+  required public init(from decoder: Swift.Decoder) throws
+  final public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+}
+@available(iOS 13, *)
+extension FCSDKiOS.ACBClientCall {
+  @objc final public func hold()
+  @objc final public func resume()
+}
+@available(iOS 13, *)
+extension FCSDKiOS.ACBClientCall {
+  @available(*, deprecated, message: "use answer(withAudio:) async instead")
+  @objc final public func answer(withAudio audioDir: FCSDKiOS.ACBMediaDirection, andVideo videoDir: FCSDKiOS.ACBMediaDirection)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func answer(withAudio audioDir: FCSDKiOS.ACBMediaDirection, andVideo videoDir: FCSDKiOS.ACBMediaDirection) async
+  #endif
+}
+@available(iOS 13, *)
+@objc public protocol ACBClientCallDelegate : ObjectiveC.NSObjectProtocol {
+  @objc optional func callDidReceiveMediaChangeRequest(_ call: FCSDKiOS.ACBClientCall)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveMediaChangeRequest(_ call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didChange status: FCSDKiOS.ACBClientCallStatus)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didChange(_ status: FCSDKiOS.ACBClientCallStatus, call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didReceiveCallFailureWithError error: Swift.Error)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveCallFailure(with error: Swift.Error, call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didReceiveDialFailureWithError error: Swift.Error)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveDialFailure(with error: Swift.Error, call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didReceiveSessionInterruption message: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveSessionInterruption(_ message: Swift.String, call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall?, didReceiveCallRecordingPermissionFailure message: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveCallRecordingPermissionFailure(_ message: Swift.String, call: FCSDKiOS.ACBClientCall?) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didChangeRemoteDisplayName name: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didChangeRemoteDisplayName(_ name: Swift.String, with call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func callDidAddLocalMediaStream(_ call: FCSDKiOS.ACBClientCall)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didAddLocalMediaStream(_ call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func callDidAddRemoteMediaStream(_ call: FCSDKiOS.ACBClientCall)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didAddRemoteMediaStream(_ call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func callWillReceiveMediaChangeRequest(_ call: FCSDKiOS.ACBClientCall)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func willReceiveMediaChangeRequest(_ call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didReportInboundQualityChange inboundQuality: Swift.Int)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReportInboundQualityChange(_ inboundQuality: Swift.Int, with call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(_ call: FCSDKiOS.ACBClientCall, didReceiveSSRCsForAudio audioSSRCs: [Swift.String], andVideo videoSSRCs: [Swift.String])
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func didReceiveSSRCs(for audioSSRCs: [Swift.String], andVideo videoSSRCs: [Swift.String], call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func call(call: FCSDKiOS.ACBClientCall, didReceive responseStatus: FCSDKiOS.ACBClientCallProvisionalResponse, withReason reason: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func responseStatus(didReceive responseStatus: FCSDKiOS.ACBClientCallProvisionalResponse, withReason reason: Swift.String, call: FCSDKiOS.ACBClientCall) async
+  #endif
+}
+@objc @_hasMissingDesignatedInitializers @available(iOS 13, *)
+final public class ACBTopic : ObjectiveC.NSObject {
+  @objc weak final public var delegate: FCSDKiOS.ACBTopicDelegate? {
+    get
+  }
+  @objc final public var name: Swift.String {
+    get
+  }
+  @objc final public var connected: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+@available(iOS 13, *)
+extension FCSDKiOS.ACBTopic {
+  @objc final public func disconnect()
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func disconnect() async
+  #endif
+  @objc final public func disconnect(withDeleteFlag deleteTopic: Swift.Bool)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func disconnect(withDeleteFlag deleteTopic: Swift.Bool) async
+  #endif
+  @objc final public func submitData(withKey key: Swift.String, value: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func submitData(withKey key: Swift.String, value: Swift.String) async
+  #endif
+  @objc final public func deleteData(withKey key: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func deleteData(withKey key: Swift.String) async
+  #endif
+  @objc final public func sendAedMessage(_ aedMessage: Swift.String)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func sendAedMessage(_ aedMessage: Swift.String) async
+  #endif
+}
+@objc @_hasMissingDesignatedInitializers @available(iOS 13, *)
+final public class ACBUC : ObjectiveC.NSObject {
+  @objc weak final public var delegate: FCSDKiOS.ACBUCDelegate?
+  @objc final public var aed: FCSDKiOS.ACBClientAED {
+    get
+  }
+  @objc final public var useCookies: Swift.Bool
+  @objc final public var connection: Swift.Bool
+  @objc deinit
+  @objc final public class func logToFile(_ logLevel: FCSDKiOS.LoggingLevel = .debug)
+  @available(*, deprecated, message: "Will be removed in future versions of FCSDKiOS, use the Async version instead.")
+  @objc final public class func uc(withConfiguration: Swift.String, delegate: FCSDKiOS.ACBUCDelegate?) -> FCSDKiOS.ACBUC
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public class func uc(withConfiguration: Swift.String, delegate: FCSDKiOS.ACBUCDelegate?) async -> FCSDKiOS.ACBUC
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public class func uc(withConfiguration: Swift.String, stunServers: [Swift.String] = [], delegate: FCSDKiOS.ACBUCDelegate?) async -> FCSDKiOS.ACBUC
+  #endif
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public class func uc(withConfiguration: Swift.String, stunServers: [Swift.String] = [], delegate: FCSDKiOS.ACBUCDelegate?, options: FCSDKiOS.ACBUCOptions) async -> FCSDKiOS.ACBUC
+  #endif
+  @objc final public var phone: FCSDKiOS.ACBClientPhone {
+    @objc get
+    @objc set
+  }
+  @objc final public func startSession()
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func startSession() async
+  #endif
+  @objc final public func stopSession()
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func stopSession() async
+  #endif
+  @objc final public func setNetworkReachable(_ networkSatisfied: Swift.Bool)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc final public func setNetworkReachable(_ networkSatisfied: Swift.Bool) async
+  #endif
+  @objc final public func acceptAnyCertificate(_ accept: Swift.Bool)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ACBAudioDeviceManager : ObjectiveC.NSObject {
+  @objc deinit
+  @objc final public func start()
+  @objc final public func stop()
+  @objc final public func audioDevices() -> [Swift.AnyHashable]?
+  final public func selectedAudioDevice() -> FCSDKiOS.ACBAudioDevice
+  @objc final public func setDefaultAudio(_ device: FCSDKiOS.ACBAudioDevice)
+  @objc final public func setAudioDevice(_ device: FCSDKiOS.ACBAudioDevice)
+  @objc final public func refreshSpeakerphoneSetting()
+  @objc final public class func useManualAudioForCallKit()
+  @objc final public class func activeCallKitAudioSession(_ audioSession: AVFAudio.AVAudioSession)
+  @objc final public class func deactiveCallKitAudioSession(_ audioSession: AVFAudio.AVAudioSession)
+}
+@objc public enum ACBClientCallStatus : Swift.Int, Swift.Comparable, Swift.Sendable {
+  case setup = 0
+  case preparingBufferViews
+  case alerting
+  case ringing
+  case mediaPending
+  case inCall
+  case timedOut
+  case busy
+  case notFound
+  case error
+  case ended
+}
+extension FCSDKiOS.ACBClientCallStatus : Swift.CaseIterable {
+  public typealias AllCases = [FCSDKiOS.ACBClientCallStatus]
+  public static var allCases: [FCSDKiOS.ACBClientCallStatus] {
+    get
+  }
+}
+extension FCSDKiOS.ACBClientCallStatus : Swift.RawRepresentable {
+  public typealias RawValue = Swift.String
+  public var rawValue: FCSDKiOS.ACBClientCallStatus.RawValue {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public static func < (lhs: FCSDKiOS.ACBClientCallStatus, rhs: FCSDKiOS.ACBClientCallStatus) -> Swift.Bool
+}
+@available(iOS 13, *)
+@objc public protocol ACBClientPhoneDelegate : ObjectiveC.NSObjectProtocol {
+  @objc optional func phone(_ phone: FCSDKiOS.ACBClientPhone, didReceive call: FCSDKiOS.ACBClientCall)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func phone(_ phone: FCSDKiOS.ACBClientPhone, received call: FCSDKiOS.ACBClientCall) async
+  #endif
+  @objc optional func phone(_ phone: FCSDKiOS.ACBClientPhone, didChangeSettings settings: FCSDKiOS.ACBVideoCaptureSetting, forCamera camera: AVFoundation.AVCaptureDevice.Position)
+  #if compiler(>=5.3) && $AsyncAwait
+  @objc optional func phone(_ phone: FCSDKiOS.ACBClientPhone, didChangeSettings settings: FCSDKiOS.ACBVideoCaptureSetting, for camera: AVFoundation.AVCaptureDevice.Position) async
+  #endif
+}
+extension FCSDKiOS.AedData.CodingKeys : Swift.Equatable {}
+extension FCSDKiOS.AedData.CodingKeys : Swift.Hashable {}
+extension FCSDKiOS.AedData.CodingKeys : Swift.RawRepresentable {}
+extension FCSDKiOS.ACBMediaDirection : Swift.Hashable {}
+extension FCSDKiOS.ACBClientCallErrorCode : Swift.Equatable {}
+extension FCSDKiOS.ACBClientCallErrorCode : Swift.Hashable {}
+extension FCSDKiOS.LoggingLevel : Swift.Equatable {}
+extension FCSDKiOS.LoggingLevel : Swift.Hashable {}
+extension FCSDKiOS.LoggingLevel : Swift.RawRepresentable {}
+extension FCSDKiOS.ACBVideoCapture : Swift.Hashable {}
+extension FCSDKiOS.ACBAudioDevice : Swift.Hashable {}
+extension FCSDKiOS.ACBClientCallProvisionalResponse : Swift.Equatable {}
+extension FCSDKiOS.ACBClientCallProvisionalResponse : Swift.Hashable {}
+extension FCSDKiOS.ACBClientCallProvisionalResponse : Swift.RawRepresentable {}
+extension FCSDKiOS.VirtualBackgroundMode : Swift.Equatable {}
+extension FCSDKiOS.VirtualBackgroundMode : Swift.Hashable {}
+extension FCSDKiOS.VirtualBackgroundMode : Swift.RawRepresentable {}
+extension FCSDKiOS.TopicData.CodingKeys : Swift.Equatable {}
+extension FCSDKiOS.TopicData.CodingKeys : Swift.Hashable {}
+extension FCSDKiOS.TopicData.CodingKeys : Swift.RawRepresentable {}
+extension FCSDKiOS.ACBClientCallStatus : Swift.Hashable {}
