@@ -7,7 +7,7 @@ s.homepage          = 'https://github.com/cbajapan/swift-fcsdk-ios'
 s.author            = { 'Name' => 'Communication Business Avenue, Inc.' }
 s.license           = { :type => 'Commercial', :text => 'Copyright Communication Business Avenue, Inc. Use of this software is subject to the terms and conditions located at https://github.com/cbajapan/swift-fcsdk-ios/blob/main/License.txt'}
 
-s.source            = { :git => 'https://github.com/devkarinlim/swift-fcsdk-ios.git', :branch => 'v4.2.1' }
+s.source            = { :http => 'https://github.com/devkarinlim/swift-fcsdk-ios/blob/v4.2.1/Frameworks/FCSDKiOS-4.2.1.xcframework.zip' }
 
 s.platforms = { :ios => "11.0" }
 
